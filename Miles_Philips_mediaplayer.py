@@ -30,12 +30,12 @@ class MediaPlayer:
         return self.__mediaQueue.size()
 
     def play(self):
-        while self.__mediaQueue.isEmpty != False:
+        while self.__mediaQueue.isEmpty() != False:
            currentTrack = self.__mediaQueue.dequeue() 
            print("Now playing",currentTrack) 
            sec = 1
            for s in currentTrack.length:
-               sleep(1)
+               time.sleep(1)
                print(sec," of ",currentTrack.length," seconds")
                sec += 1
         else:
@@ -45,47 +45,47 @@ class MediaPlayer:
         tracklist =  self.__mediaQueue
         newlist = Queue()
         found = False
+        list2 = Queue()
         while not tracklist.isEmpty():
             first = tracklist.peek()
             if first != fronttrack:
+                list2.addTrack(first)
                 tracklist.dequeue()
-            else:
+            if first = fronttrack:
                 found = True
                 newlist.enqueue(first)
-                tracklist =  self.__mediaQueue
-                while first != fronttrack:
-                    newlist.enqueue(first)
-                    tracklist.dequeue()
-                    first = tracklist.peek()
-                else:
-                    tracklist.dequeue
-                    first = tracklist.peek()    
+                tracklist.dequeue    
         else:
             if found == True:
+                for track in list2:
+                    newlist.enqueue(track)
                 self.__mediaQueue = newlist
             else:
+                self.__mediaQueue = list2
                 raise ValueError ("That track is not in the playlist!")
 
     def removeTrack(self, trackToRemove):
         tracklist = self.__mediaQueue
         newlist = Queue()
         found = False
-        while tracklist.isEmpty == False:
+        while tracklist.isEmpty() == False:
             look = tracklist.peek()
             if look != trackToRemove:
                 newlist.enqueue(look)
-                tracklist.dequeue
+                tracklist.dequeue()
             elif look == trackToRemove:
                 found = True
-                tracklist.dequeue
+                tracklist.dequeue()
         else:
             if found == False: 
+                self.__mediaQueue = newlist
                 raise ValueError ("That track is not in the playlist!")
+                
             else:
                 self.__mediaQueue = newlist
     
     def peek(self):
-        if self.__mediaQueue.isEmpty != False:
+        if self.__mediaQueue.isEmpty() != False:
             return self.__mediaQueue.peek()
         else:
             raise IndexError ("Thre are no tracks in the playlist.")
